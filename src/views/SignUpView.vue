@@ -28,6 +28,7 @@
           placeholder="Enter your email address"
         />
       </div>
+
       <div class="mb-4">
         <label class="block text-gray-700 font-medium mb-2" for="password">
           Password
@@ -64,16 +65,16 @@ const age = ref("");
 const router = useRouter();
 const auth = getAuth();
 
-
-const signUp = () => {
-  createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
-      
-      console.log(auth.currentUser);
-      router.push("/feed");
-    })
-    .catch((error) => {
-      console.log("error");
-    });
+const signUp = async () => {
+  try {
+    const data = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    router.push("/feed");
+  } catch (error) {
+    console.log("error");
+  }
 };
 </script>

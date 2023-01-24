@@ -32,7 +32,7 @@
       <p v-if="errorMsg">{{ errorMsg }}</p>
       <div class="text-center mt-6">
         <button
-          @click="signUp"
+          @click="signIn"
           class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
           type="submit"
         >
@@ -53,28 +53,27 @@ const password = ref("");
 const router = useRouter();
 const errorMsg = ref("");
 const auth = getAuth();
-const signUp = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((data) => {
-      console.log(auth.currentUser);
-      router.push("/feed");
-    })
-    .catch((error) => {
-      console.log("error");
-      switch (error.code) {
-        case "auth/invalid-email":
-          errorMsg.value = "Invalid email";
-          break;
-        case "auth/user-not-found":
-          errorMsg.value = "User not found";
-          break;
-        case "auth/wrong-password":
-          errorMsg.value = "Wrong password";
-          break;
-        default:
-          errorMsg.value = "Email or Password was incorrect. Please try again.";
-          break;
-      }
-    });
+
+const signIn = async () => {
+  try {
+    const data = await signInWithEmailAndPassword(auth, email.value, password.value);
+    router.push("/feed");
+  } catch (error) {
+    console.log("error");
+    switch (error.code) {
+      case "auth/invalid-email":
+        errorMsg.value = "Invalid email";
+        break;
+      case "auth/user-not-found":
+        errorMsg.value = "User not found";
+        break;
+      case "auth/wrong-password":
+        errorMsg.value = "Wrong password";
+        break;
+      default:
+        errorMsg.value = "Email or Password was incorrect. Please try again.";
+        break;
+    }
+  }
 };
 </script>
