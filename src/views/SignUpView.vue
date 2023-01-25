@@ -13,7 +13,7 @@
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
           v-model="name"
-          placeholder="Enter your name"
+          placeholder="Enter name"
         />
       </div>
 
@@ -26,7 +26,7 @@
           type="email"
           required
           v-model="email"
-          placeholder="Enter your email address"
+          placeholder="Enter email address"
         />
       </div>
 
@@ -52,7 +52,7 @@
           type="text"
           required
           v-model="address"
-          placeholder="Address Num"
+          placeholder="Enter Address"
         />
       </div>
 
