@@ -19,7 +19,7 @@
           <td class="border px-4 py-2">{{ x.email }}</td>
           <td class="border px-4 py-2">{{ x.phone }}</td>
           <td class="border px-4 py-2">{{ x.address }}</td>
-          <td class="border px-4 py-2">{{ x.reason }}</td>
+          <td class="border px-4 py-2">{{ x.selectOption }}</td>
         </tr>
       </tbody>
     </table>
@@ -43,7 +43,7 @@ onMounted(async () => {
       email: doc.data().email,
       phone: doc.data().phone,
       address: doc.data().address,
-      reason: doc.data().reason,
+      selectOption: doc.data().selectOption,
     };
     userData.push(data);
   });
