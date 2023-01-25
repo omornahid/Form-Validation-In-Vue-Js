@@ -1,27 +1,9 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-const isLoggedIn = ref(false);
-
-onMounted(() => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
-  });
-});
-</script>
-
 <template>
   <header class="bg-violet-200">
     <nav class="flex justify-center items-center w-full">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/sign-up">Sign Up</RouterLink>
-      <RouterLink to="/sign-in">Log In</RouterLink>
+      <RouterLink to="/feed">Users</RouterLink>
     </nav>
   </header>
   <div class="view">

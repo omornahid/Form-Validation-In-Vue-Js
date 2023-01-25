@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center items-center">
     <form
-      @submit.prevent="signUp"
-      class="bg-sky-200 mt-14 p-6 rounded-lg w-1/2"
+      @submit.prevent="addUser"
+      class="bg-purple-300 mt-5 p-6 rounded-lg w-2/5"
     >
       <h1 class="text-lg mb-4 font-bold">Create An Account</h1>
       <div class="mb-4">
@@ -16,6 +16,7 @@
           placeholder="Enter your name"
         />
       </div>
+
       <div class="mb-4">
         <label class="block text-gray-700 font-medium mb-2" for="email">
           Email
@@ -31,22 +32,36 @@
 
       <div class="mb-4">
         <label class="block text-gray-700 font-medium mb-2" for="password">
-          Password
+          Phone Number
         </label>
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
-          type="password"
+          type="number"
           required
-          v-model="password"
-          placeholder="Password must be at least 6 characters"
+          v-model="phoneNum"
+          placeholder="Phone Num"
         />
       </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-2" for="password">
+          Address
+        </label>
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full"
+          type="text"
+          required
+          v-model="address"
+          placeholder="Address Num"
+        />
+      </div>
+
       <div class="text-center mt-6">
         <button
           class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
           type="submit"
         >
-          Sign Up
+          Register
         </button>
       </div>
     </form>
@@ -56,25 +71,27 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const name = ref("");
 const email = ref("");
-const password = ref("");
-const age = ref("");
+const phoneNum = ref("");
+const address = ref("");
 const router = useRouter();
-const auth = getAuth();
 
-const signUp = async () => {
+const addUser = async () => {
   try {
-    const data = await createUserWithEmailAndPassword(
-      auth,
-      email.value,
-      password.value
-    );
+    const docRef = await addDoc(collection(db, "users"), {
+      name: name.value,
+      email: email.value,
+      phone: phoneNum.value,
+      address: address.value,
+    });
     router.push("/feed");
-  } catch (error) {
-    console.log("error");
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
 };
 </script>
