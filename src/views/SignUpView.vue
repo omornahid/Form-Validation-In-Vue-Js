@@ -45,6 +45,7 @@
           rows="3"
           placeholder="Enter Address"
           v-model="address"
+          validation="required"
         />
       </div>
       <div>
