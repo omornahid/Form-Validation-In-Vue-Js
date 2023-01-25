@@ -10,6 +10,7 @@
           <th class="px-4 py-2">Email</th>
           <th class="px-4 py-2">Phone Num</th>
           <th class="px-4 py-2">Address</th>
+          <th class="px-4 py-2">Reason</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +19,7 @@
           <td class="border px-4 py-2">{{ x.email }}</td>
           <td class="border px-4 py-2">{{ x.phone }}</td>
           <td class="border px-4 py-2">{{ x.address }}</td>
+          <td class="border px-4 py-2">{{ x.reason }}</td>
         </tr>
       </tbody>
     </table>
@@ -41,6 +43,7 @@ onMounted(async () => {
       email: doc.data().email,
       phone: doc.data().phone,
       address: doc.data().address,
+      reason: doc.data().reason,
     };
     userData.push(data);
   });

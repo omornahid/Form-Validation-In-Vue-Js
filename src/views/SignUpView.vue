@@ -5,59 +5,58 @@
       class="bg-purple-300 mt-5 p-6 rounded-lg md:w-2/5 w-11/12"
     >
       <h1 class="text-lg mb-4 font-bold text-center">Create An Account</h1>
-      <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="name">
-          Name
-        </label>
-        <input
-          class="border border-gray-400 p-2 rounded-lg w-full"
+      <div>
+        <FormKit
           type="text"
+          label="User Name"
+          label-class=" text-green-600"
+          validation="required|length:4"
           v-model="name"
-          placeholder="Enter name"
         />
       </div>
 
-      <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="email">
-          Email
-        </label>
-        <input
-          class="border border-gray-400 p-2 rounded-lg w-full"
+      <div>
+        <FormKit
+          name="email"
           type="email"
-          required
+          label="Email"
+          label-class=" text-green-600"
+          :delay="1000"
+          validation="required|length:7|email"
+          validation-visibility="live"
           v-model="email"
-          placeholder="Enter email address"
         />
       </div>
-
-      <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="password">
-          Phone Number
-        </label>
-        <input
-          class="border border-gray-400 p-2 rounded-lg w-full"
-          type="number"
-          required
+      <div>
+        <FormKit
+          name="phone"
+          mask="###-###-#####"
+          label="Phone number"
+          label-class=" text-green-600"
+          validation="required|length:11"
           v-model="phoneNum"
-          placeholder="Phone Num"
         />
       </div>
-
-      <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="password">
-          Address
-        </label>
-        <input
-          class="border border-gray-400 p-2 rounded-lg w-full"
-          type="text"
-          required
-          v-model="address"
+      <div>
+        <FormKit
+          label="Address"
+          label-class=" text-green-600"
+          type="textarea"
+          rows="3"
           placeholder="Enter Address"
+          v-model="address"
         />
       </div>
-
-     
-
+      <div>
+        <FormKit
+          type="select"
+          label="Why would you use our sevice for?"
+          label-class=" text-green-600"
+          :options="carBrands"
+          :value="['Work']"
+          v-model="selectOption"
+        />
+      </div>
       <div class="text-center mt-6">
         <button
           class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
@@ -80,8 +79,16 @@ const name = ref("");
 const email = ref("");
 const phoneNum = ref("");
 const address = ref("");
+const selectOption = ref("");
 const router = useRouter();
 
+const carBrands = [
+  { label: "Work", value: "Work" },
+  { label: "Education", value: "Education" },
+  { label: "Hobby", value: "Hobby" },
+  { label: "Freelance", value: "Freelance" },
+  { label: "Business", value: "Business" },
+];
 const addUser = async () => {
   try {
     const docRef = await addDoc(collection(db, "users"), {
@@ -89,6 +96,7 @@ const addUser = async () => {
       email: email.value,
       phone: phoneNum.value,
       address: address.value,
+      selectOption: selectOption.value,
     });
     router.push("/feed");
     console.log("Document written with ID: ", docRef.id);
