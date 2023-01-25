@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/vue": "^1.0.0-beta.14",
     "firebase": "^9.16.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"

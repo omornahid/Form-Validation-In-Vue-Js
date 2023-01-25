@@ -1,5 +1,5 @@
 <template>
-  <h1 className="text-3xl font-bold mt-8 mb-7 text-violet-700">
+  <h1 className="text-3xl text-center font-bold mt-8 mb-7 text-violet-700">
     Existing Users
   </h1>
   <div class="w-full flex justify-center items-center">

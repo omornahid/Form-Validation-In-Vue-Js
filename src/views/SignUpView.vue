@@ -2,11 +2,11 @@
   <div class="flex justify-center items-center">
     <form
       @submit.prevent="addUser"
-      class="bg-purple-300 mt-5 p-6 rounded-lg w-2/5"
+      class="bg-purple-300 mt-5 p-6 rounded-lg md:w-2/5 w-11/12"
     >
-      <h1 class="text-lg mb-4 font-bold">Create An Account</h1>
+      <h1 class="text-lg mb-4 font-bold text-center">Create An Account</h1>
       <div class="mb-4">
-        <label class="block text-gray-700 font-medium mb-2" for="name">
+        <label class="block text-black font-medium mb-2" for="name">
           Name
         </label>
         <input
@@ -18,7 +18,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 font-medium mb-2" for="email">
+        <label class="block text-black font-medium mb-2" for="email">
           Email
         </label>
         <input
@@ -31,7 +31,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 font-medium mb-2" for="password">
+        <label class="block text-black font-medium mb-2" for="password">
           Phone Number
         </label>
         <input
@@ -44,7 +44,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-gray-700 font-medium mb-2" for="password">
+        <label class="block text-black font-medium mb-2" for="password">
           Address
         </label>
         <input
@@ -55,6 +55,8 @@
           placeholder="Enter Address"
         />
       </div>
+
+     
 
       <div class="text-center mt-6">
         <button
