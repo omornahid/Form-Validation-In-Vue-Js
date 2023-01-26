@@ -13,9 +13,10 @@
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
           v-model="name"
-          required
-          placeholder="Enter name"
+          @blur="validateUsername"
+          placeholder="e.g. Abcd"
         />
+        <p class="mt- text-red-600 text-sm">{{ usernameError }}</p>
       </div>
 
       <div class="mb-4">
@@ -25,10 +26,11 @@
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="email"
-          required
+          @blur="validateEmail"
           v-model="email"
-          placeholder="Enter email address"
+          placeholder="e.g. abc@gmail.com"
         />
+        <p class="mt- text-red-600 text-sm">{{ emailError }}</p>
       </div>
 
       <div class="mb-4">
@@ -38,10 +40,11 @@
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
-          required
+          @blur="validatePhone"
           v-model="phoneNum"
-          placeholder="Phone Num"
+          placeholder="e.g. 01711111111"
         />
+        <p class="mt-1 text-red-600 text-sm">{{ phoneError }}</p>
       </div>
 
       <div class="mb-4">
@@ -53,7 +56,7 @@
           type="text"
           required
           v-model="address"
-          placeholder="Enter Address"
+          placeholder="e.g. 1/2, Dhanmondi, Dhaka"
         />
       </div>
 
@@ -86,7 +89,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -96,6 +99,11 @@ const email = ref("");
 const phoneNum = ref("");
 const address = ref("");
 const selectOption = ref("");
+
+const emailError = ref("");
+const phoneError = ref("");
+const usernameError = ref("");
+
 const router = useRouter();
 
 const joinOptions = ref([
@@ -105,6 +113,37 @@ const joinOptions = ref([
   { id: 4, value: "Freelance" },
   { id: 5, value: "Business" },
 ]);
+
+const validateUsername = () => {
+  if (name === "") {
+    usernameError.value = "Username is required";
+  } else if (name.value.length < 4) {
+    usernameError.value = "Username must be at least 4 characters";
+  } else {
+    usernameError.value = "";
+  }
+};
+
+const validateEmail = () => {
+  if (email === "") {
+    emailError.value = "Email is required";
+  } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+    emailError.value = "Invalid email format";
+  } else {
+    emailError.value = "";
+  }
+};
+
+const validatePhone = () => {
+  if (phoneNum === "") {
+    phoneError.value = "Phone number is required";
+  } else if (!/^\d{11}$/.test(phoneNum.value)) {
+    phoneError.value =
+      "Invalid phone number format, it should be of 11 digits.";
+  } else {
+    phoneError.value = "";
+  }
+};
 
 const addUser = async () => {
   try {
