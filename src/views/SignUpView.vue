@@ -30,7 +30,7 @@
           v-model="email"
           placeholder="e.g. abc@gmail.com"
         />
-        <p class="mt- text-red-600 text-sm">{{ emailError }}</p>
+        <p class="mt-1 text-red-600 text-sm">{{ emailError }}</p>
       </div>
 
       <div class="mb-4">
