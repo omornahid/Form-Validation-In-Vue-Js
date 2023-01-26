@@ -13,6 +13,7 @@
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
           v-model="name"
+          required
           placeholder="Enter name"
         />
       </div>
