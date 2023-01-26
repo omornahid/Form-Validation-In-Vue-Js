@@ -13,10 +13,10 @@
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
           v-model="name"
-          @blur="validateUsername"
+          @keyup="validateUsername"
           placeholder="e.g. Abcd"
         />
-        <p class="mt- text-red-600 text-sm">{{ usernameError }}</p>
+        <p class="mt-1 text-red-600 text-sm">{{ usernameError }}</p>
       </div>
 
       <div class="mb-4">
@@ -26,7 +26,7 @@
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="email"
-          @blur="validateEmail"
+          @keyup="validateEmail"
           v-model="email"
           placeholder="e.g. abc@gmail.com"
         />
@@ -40,7 +40,7 @@
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
-          @blur="validatePhone"
+          @keyup="validatePhone"
           v-model="phoneNum"
           placeholder="e.g. 01711111111"
         />
@@ -89,16 +89,19 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc,getDocs } from "firebase/firestore";
+
 import { db } from "../firebase";
+
 
 const name = ref("");
 const email = ref("");
 const phoneNum = ref("");
 const address = ref("");
 const selectOption = ref("");
+
 
 const emailError = ref("");
 const phoneError = ref("");
@@ -129,7 +132,8 @@ const validateEmail = () => {
     emailError.value = "Email is required";
   } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
     emailError.value = "Invalid email format";
-  } else {
+  }
+   else {
     emailError.value = "";
   }
 };

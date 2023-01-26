@@ -31,7 +31,7 @@ import { onMounted, ref } from "vue";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
 
-const userDataStorage = ref([]);
+ const userDataStorage = ref([]);
 
 onMounted(async () => {
   const querySnapshot = await getDocs(collection(db, "users"));
@@ -49,4 +49,5 @@ onMounted(async () => {
   });
   userDataStorage.value = userData;
 });
+
 </script>
