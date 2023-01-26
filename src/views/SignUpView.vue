@@ -5,59 +5,73 @@
       class="bg-purple-300 mt-5 p-6 rounded-lg md:w-2/5 w-11/12"
     >
       <h1 class="text-lg mb-4 font-bold text-center">Create An Account</h1>
-      <div>
-        <FormKit
+      <div class="mb-4">
+        <label class="block text-black font-medium mb-2" for="name">
+          Name
+        </label>
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
-          label="User Name"
-          label-class=" text-green-600"
-          validation="required|length:4"
           v-model="name"
+          placeholder="Enter name"
         />
       </div>
 
-      <div>
-        <FormKit
-          name="email"
+      <div class="mb-4">
+        <label class="block text-black font-medium mb-2" for="email">
+          Email
+        </label>
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full"
           type="email"
-          label="Email"
-          label-class=" text-green-600"
-          :delay="1000"
-          validation="required|length:7|email"
-          validation-visibility="live"
+          required
           v-model="email"
+          placeholder="Enter email address"
         />
       </div>
-      <div>
-        <FormKit
-          name="phone"
-          mask="###-###-#####"
-          label="Phone number"
-          label-class=" text-green-600"
-          validation="required|length:11"
+
+      <div class="mb-4">
+        <label class="block text-black font-medium mb-2" for="password">
+          Phone Number
+        </label>
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full"
+          type="text"
+          required
           v-model="phoneNum"
+          placeholder="Phone Num"
         />
       </div>
-      <div>
-        <FormKit
-          label="Address"
-          label-class=" text-green-600"
-          type="textarea"
-          rows="3"
-          placeholder="Enter Address"
+
+      <div class="mb-4">
+        <label class="block text-black font-medium mb-2" for="password">
+          Address
+        </label>
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full"
+          type="text"
+          required
           v-model="address"
-          validation="required"
+          placeholder="Enter Address"
         />
       </div>
-      <div>
-        <FormKit
-          type="select"
-          label="Why would you use our sevice for?"
-          label-class=" text-green-600"
-          :options="carBrands"
-          :value="['Work']"
+
+      <div class="mb-4">
+        <label class="block text-black font-medium mb-2" for="password">
+          Why would you use our sevice for?
+        </label>
+        <select
+          class="border border-gray-400 p-2 rounded-lg w-full"
           v-model="selectOption"
-        />
+          required
+        >
+          <option value="">Please choose an option</option>
+          <option v-for="option in joinOptions" :key="option.id">
+            {{ option.value }}
+          </option>
+        </select>
       </div>
+
       <div class="text-center mt-6">
         <button
           class="bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
@@ -83,13 +97,14 @@ const address = ref("");
 const selectOption = ref("");
 const router = useRouter();
 
-const carBrands = [
-  { label: "Work", value: "Work" },
-  { label: "Education", value: "Education" },
-  { label: "Hobby", value: "Hobby" },
-  { label: "Freelance", value: "Freelance" },
-  { label: "Business", value: "Business" },
-];
+const joinOptions = ref([
+  { id: 1, value: "Work" },
+  { id: 2, value: "Education" },
+  { id: 3, value: "Hobby" },
+  { id: 4, value: "Freelance" },
+  { id: 5, value: "Business" },
+]);
+
 const addUser = async () => {
   try {
     const docRef = await addDoc(collection(db, "users"), {
