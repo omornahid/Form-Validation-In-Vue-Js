@@ -34,9 +34,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="password">
-          Phone Number
-        </label>
+        <label class="block text-black font-medium mb-2"> Phone Number </label>
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
@@ -48,9 +46,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="password">
-          Address
-        </label>
+        <label class="block text-black font-medium mb-2"> Address </label>
         <input
           class="border border-gray-400 p-2 rounded-lg w-full"
           type="text"
@@ -61,19 +57,31 @@
       </div>
 
       <div class="mb-4">
-        <label class="block text-black font-medium mb-2" for="password">
-          Why would you use our sevice for?
+        <label class="block text-black mb-2 font-bold">
+          Select your favourite cars
         </label>
-        <select
-          class="border border-gray-400 p-2 rounded-lg w-full"
-          v-model="selectOption"
+        <input
+          class="border border-gray-400 p-2 rounded-lg w-full cursor-pointer"
+          type="text"
           required
-        >
-          <option value="">Please choose an option</option>
-          <option v-for="option in joinOptions" :key="option.id">
-            {{ option.value }}
-          </option>
-        </select>
+          @click="show = !show"
+          v-model="selected"
+        />
+        <ul v-if="show">
+          <li
+            class="cursor-pointer p-2.5"
+            v-for="option in options"
+            :key="option"
+            :style="{
+              backgroundColor: selectedOptions.includes(option.label)
+                ? '#7bed9f'
+                : '#dfe4ea',
+            }"
+            @click="toggleSelection(option.label)"
+          >
+            {{ option.label }}
+          </li>
+        </ul>
       </div>
 
       <div class="text-center mt-6">
@@ -89,33 +97,21 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { collection, addDoc,getDocs } from "firebase/firestore";
-
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-
 
 const name = ref("");
 const email = ref("");
 const phoneNum = ref("");
 const address = ref("");
-const selectOption = ref("");
-
 
 const emailError = ref("");
 const phoneError = ref("");
 const usernameError = ref("");
 
 const router = useRouter();
-
-const joinOptions = ref([
-  { id: 1, value: "Work" },
-  { id: 2, value: "Education" },
-  { id: 3, value: "Hobby" },
-  { id: 4, value: "Freelance" },
-  { id: 5, value: "Business" },
-]);
 
 const validateUsername = () => {
   if (name === "") {
@@ -132,8 +128,7 @@ const validateEmail = () => {
     emailError.value = "Email is required";
   } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
     emailError.value = "Invalid email format";
-  }
-   else {
+  } else {
     emailError.value = "";
   }
 };
@@ -156,12 +151,37 @@ const addUser = async () => {
       email: email.value,
       phone: phoneNum.value,
       address: address.value,
-      selectOption: selectOption.value,
+      selectOption: selectedOptions.value,
     });
     router.push("/feed");
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
+  }
+};
+
+const show = ref(false);
+const options = ref([
+  { label: "Audi", value: "audi" },
+  { label: "Ford ", value: "ford " },
+  { label: "Mercedes ", value: "mercedes " },
+  { label: "Cadillac", value: "cadillac" },
+]);
+const selectedOptions = ref([]);
+
+const selected = computed(() => {
+  if (selectedOptions.value.length === 0) {
+    return "Select an option";
+  }
+  return selectedOptions.value.join(", ");
+});
+
+const toggleSelection = (option) => {
+  const index = selectedOptions.value.indexOf(option);
+  if (index === -1) {
+    selectedOptions.value.push(option);
+  } else {
+    selectedOptions.value.splice(index, 1);
   }
 };
 </script>

@@ -1,3 +1,3 @@
 <template>
- <h4 className="text-3xl text-center font-bold mt-16 text-pink-800">Vue 3 Assignment</h4>
+  <h1 class="text-center text-green-500 p-9 text-4xl">Assignment on Vue.js</h1>
 </template>
